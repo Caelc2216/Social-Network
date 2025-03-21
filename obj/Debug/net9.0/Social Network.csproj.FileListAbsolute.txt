@@ -1,0 +1,14 @@
+C:\Users\caelc\Documents\Spring 2025\Data Stuctures\Assignments\Social Network\obj\Debug\net9.0\Social Network.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\caelc\Documents\Spring 2025\Data Stuctures\Assignments\Social Network\obj\Debug\net9.0\Social Network.AssemblyInfoInputs.cache
+C:\Users\caelc\Documents\Spring 2025\Data Stuctures\Assignments\Social Network\obj\Debug\net9.0\Social Network.AssemblyInfo.cs
+C:\Users\caelc\Documents\Spring 2025\Data Stuctures\Assignments\Social Network\obj\Debug\net9.0\Social Network.csproj.CoreCompileInputs.cache
+C:\Users\caelc\Documents\Spring 2025\Data Stuctures\Assignments\Social Network\bin\Debug\net9.0\Social Network.exe
+C:\Users\caelc\Documents\Spring 2025\Data Stuctures\Assignments\Social Network\bin\Debug\net9.0\Social Network.deps.json
+C:\Users\caelc\Documents\Spring 2025\Data Stuctures\Assignments\Social Network\bin\Debug\net9.0\Social Network.runtimeconfig.json
+C:\Users\caelc\Documents\Spring 2025\Data Stuctures\Assignments\Social Network\bin\Debug\net9.0\Social Network.dll
+C:\Users\caelc\Documents\Spring 2025\Data Stuctures\Assignments\Social Network\bin\Debug\net9.0\Social Network.pdb
+C:\Users\caelc\Documents\Spring 2025\Data Stuctures\Assignments\Social Network\obj\Debug\net9.0\Social Network.dll
+C:\Users\caelc\Documents\Spring 2025\Data Stuctures\Assignments\Social Network\obj\Debug\net9.0\refint\Social Network.dll
+C:\Users\caelc\Documents\Spring 2025\Data Stuctures\Assignments\Social Network\obj\Debug\net9.0\Social Network.pdb
+C:\Users\caelc\Documents\Spring 2025\Data Stuctures\Assignments\Social Network\obj\Debug\net9.0\Social Network.genruntimeconfig.cache
+C:\Users\caelc\Documents\Spring 2025\Data Stuctures\Assignments\Social Network\obj\Debug\net9.0\ref\Social Network.dll
