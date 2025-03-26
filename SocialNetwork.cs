@@ -7,43 +7,75 @@ public class SocialNetwork
         UserFriendList = new Dictionary<string, List<string>>();
     }
 
-    public void AddUser(string vertex)
+    public void AddUser(string name)
     {
-        if (!UserFriendList.ContainsKey(vertex))
+        if (HasUser(name))
         {
-            UserFriendList[vertex] = new List<string>();
+            Console.WriteLine($"{name} already exists.");
+            return;
+        }
+
+        if (!UserFriendList.ContainsKey(name))
+        {
+            UserFriendList[name] = new List<string>();
+            Console.WriteLine($"{name} has been added.");
         }
     }
 
-    public void AddFriend(string vertex1, string vertex2)
+    public Dictionary<string, List<string>> GetNetwork()
     {
-        if (UserFriendList.ContainsKey(vertex1) && UserFriendList.ContainsKey(vertex2)) /* if directional delete && AdjacencyList.ContainsKey(vertex2) */
+        return UserFriendList;
+    }
+
+    public void AddFriend(string user1, string user2)
+    {
+        if (!HasUser(user1) || !HasUser(user2))
         {
-            if (!UserFriendList[vertex1].Contains(vertex2))
+            Console.WriteLine($"One or both users do not exist.");
+            return;
+        }
+
+        if (AreFriends(user1, user2))
+        {
+            Console.WriteLine($"{user1} and {user2} are already friends.");
+            return;
+        }
+
+        if (UserFriendList.ContainsKey(user1) && UserFriendList.ContainsKey(user2)) /* if directional delete && AdjacencyList.ContainsKey(vertex2) */
+        {
+            if (!UserFriendList[user1].Contains(user2))
             {
-                UserFriendList[vertex1].Add(vertex2);
+                UserFriendList[user1].Add(user2);
             }
 
             // if directional delete this
-            if (!UserFriendList[vertex2].Contains(vertex1))
+            if (!UserFriendList[user2].Contains(user1))
             {
-                UserFriendList[vertex2].Add(vertex1);
+                UserFriendList[user2].Add(user1);
             }
+
+            Console.WriteLine($"{user1} and {user2} are now friends.");
         }
     }
 
-    public void RemoveUser(string person)
+    public void RemoveUser(string name)
     {
+        if (!HasUser(name))
+        {
+            Console.WriteLine($"{name} does not exist.");
+            return;
+        }
         // Remove all edges that contain this vertex
         foreach (var user in UserFriendList.Keys)
         {
-            if(UserFriendList[user].Contains(person))
+            if (UserFriendList[user].Contains(name))
             {
-                UserFriendList[user].Remove(person);
+                UserFriendList[user].Remove(name);
             }
         }
         // Remove vertex
-        UserFriendList.Remove(person);
+        UserFriendList.Remove(name);
+        Console.WriteLine($"{name} has been removed from the network.");
     }
 
     public bool AreFriends(string startVertex, string endVertex)
@@ -56,113 +88,109 @@ public class SocialNetwork
         return UserFriendList.ContainsKey(vertex);
     }
 
-    // Breadth-First Search
-    public bool BFS(string start, string target)
+    public void RemoveFriend(string user1, string user2)
     {
-        Queue<string> queue = new();
-        HashSet<string> visited = new ();
-        Dictionary<string, string> parent = new ();
-
-        queue.Enqueue(start);
-        visited.Add(start);
-        parent[start] = null;
-
-        while (queue.Count > 0)
+        if (!HasUser(user1) || !HasUser(user2))
         {
-            string currentVertex = queue.Dequeue();
-
-            if (currentVertex == target)
-            {
-                List<string> path = new List<string>();
-                while (currentVertex != null)
-                {
-                    path.Add(currentVertex);
-                    currentVertex = parent[currentVertex];
-                }
-
-                path.Reverse();
-                Console.Write("Path: ");
-                foreach (var item in path)
-                {
-                    Console.Write($"{item} ");
-                }
-                return true;
-            }
-
-            foreach (var vertex in UserFriendList[currentVertex])
-            {
-                if (!visited.Contains(vertex))
-                {
-                    queue.Enqueue(vertex);
-                    visited.Add(vertex);
-                    parent[vertex] = currentVertex;
-                }
-            }
-        }
-        return false;
-    }
-
-    // Depth-First Search
-    public bool DepthFirstSearch(string start, string target)
-    {
-        HashSet<string> visited = new HashSet<string>();
-        List<string> path = new List<string>();
-        return DepthFirstSearchRecursive(start, target, visited, path);
-    }
-
-    public bool DepthFirstSearchRecursive(string currentVertex, string target, HashSet<string> visited, List<string> path)
-    {
-        path.Add(currentVertex);
-        visited.Add(currentVertex);
-
-        if (currentVertex == target)
-        {
-            Console.Write("Path: ");
-            foreach (var item in path)
-            {
-                Console.Write($"{item} ");
-            }
-            return true;
+            Console.WriteLine($"One or both users do not exist.");
+            return;
         }
 
-        foreach (var vertex in UserFriendList[currentVertex])
+        if (!AreFriends(user1, user2))
         {
-            if (!visited.Contains(vertex))
-            {
-                if (DepthFirstSearchRecursive(vertex, target, visited, path))
-                {
-                    return true;
-                }
-            }
+            Console.WriteLine($"{user1} and {user2} are not friends.");
+            return;
         }
-        return false;
+
+        UserFriendList[user1].Remove(user2);
+        UserFriendList[user2].Remove(user1);
+        Console.WriteLine($"{user1} and {user2} are no longer friends.");
     }
 
-    // public Dictionary<string, string> Dijkstra(string start)
-    // {
-    //     var distances = new Dictionary<string, string>();
-    //     // Priority Queue
-    //     var pq = new PriorityQueue<string, string>();
-    // }
-
-    public void RemoveFriend(string startVertex, string endVertex)
+    public void DisplayFriends(string user)
     {
-        UserFriendList[startVertex].Remove(endVertex);
-    }
-
-    public void DisplayFriends(string p)
-    {
-        List<string> friends = UserFriendList[p];
-        Console.WriteLine($"{p}'s friends: ");
+        List<string> friends = UserFriendList[user];
+        if (!HasUser(user))
+        {
+            Console.WriteLine($"{user} does not exist.");
+            return;
+        }
+        Console.WriteLine($"{user}'s friends: ");
         foreach (var friend in friends)
         {
             Console.Write($"{friend},");
         }
         if (friends.Count == 0)
         {
-            Console.WriteLine($"{p} has no friends");
+            Console.WriteLine($"{user} has no friends");
+        }
+    }
+
+    public void FindMutualFriends(string user1, string user2)
+    {
+        List<string> mutualFriends = new();
+
+        if (!HasUser(user1) || !HasUser(user2))
+        {
+            Console.WriteLine($"One or both users do not exist.");
+            return;
+        }
+
+        foreach (var friend in UserFriendList[user1])
+        {
+            if (UserFriendList[user1].Contains(friend)
+                && UserFriendList[user2].Contains(friend))
+            {
+                mutualFriends.Add(friend);
+            }
+        }
+
+        if (mutualFriends.Count == 0)
+        {
+            Console.WriteLine($"{user1} and {user2} have no mutual friends.");
+            return;
+        }
+
+        Console.WriteLine($"Mutual friends of {user1} and {user2}: ");
+        foreach (var friend in mutualFriends)
+        {
+            Console.Write($"{friend}, ");
+        }
+    }
+
+    public void SuggestFriends(string user)
+    {
+        List<string> suggestedFriends = new();
+        if (!HasUser(user))
+        {
+            Console.WriteLine($"{user} does not exist.");
+            return;
+        }
+
+        foreach (var friend in UserFriendList[user])
+        {
+            foreach (var f in UserFriendList[friend])
+            {
+                if (!UserFriendList[user].Contains(f) && f != user)
+                {
+                    suggestedFriends.Add(f);
+                }
+            }
+        }
+
+        if (suggestedFriends.Count == 0)
+        {
+            Console.WriteLine($"No suggested friends for {user}.");
+            return;
+        }
+
+        Console.WriteLine($"Friend suggestions for {user}: ");
+        foreach (var friend in suggestedFriends)
+        {
+            Console.Write($"{friend}, ");
         }
     }
 }
 
+//UI in notepad
 
