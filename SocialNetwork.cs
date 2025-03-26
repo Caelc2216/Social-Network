@@ -107,22 +107,22 @@ public class SocialNetwork
         Console.WriteLine($"{user1} and {user2} are no longer friends.");
     }
 
-    public void DisplayFriends(string p)
+    public void DisplayFriends(string user)
     {
-        List<string> friends = UserFriendList[p];
-        if (!HasUser(p))
+        List<string> friends = UserFriendList[user];
+        if (!HasUser(user))
         {
-            Console.WriteLine($"{p} does not exist.");
+            Console.WriteLine($"{user} does not exist.");
             return;
         }
-        Console.WriteLine($"{p}'s friends: ");
+        Console.WriteLine($"{user}'s friends: ");
         foreach (var friend in friends)
         {
             Console.Write($"{friend},");
         }
         if (friends.Count == 0)
         {
-            Console.WriteLine($"{p} has no friends");
+            Console.WriteLine($"{user} has no friends");
         }
     }
 
